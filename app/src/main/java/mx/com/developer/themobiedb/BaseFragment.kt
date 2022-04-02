@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.gms.location.LocationCallback
+import com.muddassir.connection_checker.ConnectionState
+import com.muddassir.connection_checker.checkConnection
 import mx.com.developer.themobiedb.location.LocationProvider
 import javax.inject.Inject
 
@@ -40,6 +42,28 @@ abstract class BaseFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbackActivity = context.takeIf { it is OnSetupActivityListener }?.let { it as OnSetupActivityListener }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        checkConnection(this) { connectionState ->
+            when (connectionState) {
+                ConnectionState.CONNECTED -> {
+                    Toast.makeText(context, "Has Internet Connection", Toast.LENGTH_SHORT).show()
+                }
+                ConnectionState.SLOW -> {
+                    Toast.makeText(context, "Slow Internet Connection", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(
+                        context,
+                        "No Internet connection",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,10 +99,6 @@ abstract class BaseFragment : Fragment() {
 
     fun navigateToFragment(view: View, navigationID: Int) {
         Navigation.findNavController(view).navigate(navigationID)
-    }
-
-    fun popBackStack(view: View) {
-        Navigation.findNavController(view).popBackStack()
     }
 
 
