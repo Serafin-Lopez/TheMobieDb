@@ -76,7 +76,9 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun getLocalPopularMovies() : List<PopularMoviesModel.Result> {
+    suspend fun getLocalPopularMovies() : Resource<List<PopularMoviesModel.Result>> {
+
+        val resource: Resource<List<PopularMoviesModel.Result>>
 
         val data = localDataSource.getPopularMovies()
 
@@ -87,7 +89,9 @@ class MoviesRepository @Inject constructor(
             it.bitmap = decodedImage
         }
 
-        return data
+        resource = Resource.success(data)
+
+        return resource
     }
 
 }

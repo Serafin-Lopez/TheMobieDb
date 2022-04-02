@@ -21,7 +21,7 @@ class PopularMoviesViewModel @Inject constructor(
 
     var movies = MutableLiveData <Resource<PopularMoviesModel>>()
 
-    var localData =  MutableLiveData<List<PopularMoviesModel.Result>>()
+    var localData =  MutableLiveData<Resource<List<PopularMoviesModel.Result>>>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun loadPopularMovies() {
@@ -33,7 +33,7 @@ class PopularMoviesViewModel @Inject constructor(
     }
 
     fun getMovies() {
-
+        localData.postValue(Resource.loading())
         viewModelScope.launch(Dispatchers.IO) {
             val listMovies = moviesRepository.getLocalPopularMovies()
             localData.postValue(listMovies)

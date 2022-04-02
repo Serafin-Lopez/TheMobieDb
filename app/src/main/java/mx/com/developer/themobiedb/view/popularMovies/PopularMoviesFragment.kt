@@ -99,9 +99,28 @@ class PopularMoviesFragment : BaseFragment(), MoviesListCallback {
     private fun getPopularMovies() {
 
         viewModel.getMovies()
-        viewModel.localData.observe(viewLifecycleOwner, Observer { data ->
-            data?.let {
-                adapter.setData(it)
+        viewModel.localData.observe(viewLifecycleOwner, Observer { result ->
+
+            when(result.status) {
+
+                Resource.Status.LOADING -> {
+                    progressBar.show()
+                    recyclerViewMovies.hide()
+                    Log.e("movies","${Resource.Status.LOADING}")
+                }
+
+                Resource.Status.SUCCESS -> {
+                    progressBar.hide()
+                    recyclerViewMovies.show()
+                    Log.e("movies","${Resource.Status.SUCCESS}")
+                    result.data?.let { adapter.setData(it) }
+                }
+
+                Resource.Status.ERROR -> {
+                    recyclerViewMovies.show()
+                    progressBar.hide()
+                    Log.e("movies","${Resource.Status.ERROR}")
+                }
             }
         })
     }
