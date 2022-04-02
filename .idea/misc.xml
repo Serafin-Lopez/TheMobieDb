@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/drawable/button_red.xml" value="0.1895" />
         <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/drawable/ic_home_red.xml" value="0.1895" />
         <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/drawable/ic_menu.xml" value="0.1895" />
         <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/drawable/shape_image_animations_background.xml" value="0.1895" />
@@ -11,6 +12,7 @@
         <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/drawable/shape_image_successful_background.xml" value="0.1895" />
         <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/drawable/style_splash.xml" value="0.1895" />
         <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/layout/activity_main.xml" value="0.1671195652173913" />
+        <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/layout/activity_no_internet.xml" value="0.1671195652173913" />
         <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/layout/activity_permissions.xml" value="0.1671195652173913" />
         <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/layout/activity_splash.xml" value="0.1671195652173913" />
         <entry key="..\:/Users/sees_/AndroidStudioProjects/TheMobieDb/app/src/main/res/layout/fragment_history_locations.xml" value="0.1671195652173913" />

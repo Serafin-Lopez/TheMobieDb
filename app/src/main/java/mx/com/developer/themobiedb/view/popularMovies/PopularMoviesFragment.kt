@@ -32,7 +32,7 @@ import mx.com.developer.themobiedb.helpers.show
 @AndroidEntryPoint
 class PopularMoviesFragment : BaseFragment(), MoviesListCallback {
 
-    private val viewModel: PopularMoviesViewModel by activityViewModels()
+    private val viewModel: PopularMoviesViewModel by viewModels()
     lateinit var adapter: PopularMoviesAdapter
 
 

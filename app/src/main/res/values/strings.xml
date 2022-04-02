@@ -20,4 +20,6 @@
     <string name="loading">Loading, please waiting</string>
     <string name="files_uploaded">Files Uploaded</string>
     <string name="see_image">See image uploaded</string>
+    <string name="instructions">You do not have an active internet connection, please connect to a network in order to continue</string>
+    <string name="title">No internet connection</string>
 </resources>

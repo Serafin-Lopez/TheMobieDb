@@ -4,13 +4,22 @@ import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.bumptech.glide.manager.ConnectivityMonitor
 import com.google.android.gms.location.LocationCallback
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.muddassir.connection_checker.ConnectionState
+import com.muddassir.connection_checker.ConnectivityListener
 import com.muddassir.connection_checker.checkConnection
+import mx.com.developer.themobiedb.helpers.loadText
 import mx.com.developer.themobiedb.location.LocationProvider
+import mx.com.developer.themobiedb.view.popularMovies.PopularMoviesFragment
 import javax.inject.Inject
 
 
@@ -42,28 +51,6 @@ abstract class BaseFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbackActivity = context.takeIf { it is OnSetupActivityListener }?.let { it as OnSetupActivityListener }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        checkConnection(this) { connectionState ->
-            when (connectionState) {
-                ConnectionState.CONNECTED -> {
-                    Toast.makeText(context, "Has Internet Connection", Toast.LENGTH_SHORT).show()
-                }
-                ConnectionState.SLOW -> {
-                    Toast.makeText(context, "Slow Internet Connection", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-                    Toast.makeText(
-                        context,
-                        "No Internet connection",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,6 +91,56 @@ abstract class BaseFragment : Fragment() {
 
     fun showToast(message: String?): Toast {
         return Toast.makeText(context, message, Toast.LENGTH_SHORT)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //checkConnectionState()
+    }
+
+    private fun checkConnectionState() {
+
+        checkConnection(this) { connectionState ->
+            when (connectionState) {
+                ConnectionState.CONNECTED -> {
+                    Toast.makeText(context, "Has Internet Connection", Toast.LENGTH_SHORT).show()
+                }
+                ConnectionState.SLOW -> {
+                    Toast.makeText(context, "Slow Internet Connection", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    //dialogNoInternet(getString(R.string.title),getString(R.string.instructions),R.drawable.no_internet_connection)
+                }
+            }
+        }
+    }
+
+
+    fun dialogNoInternet(title:String, description:String, image: Int) {
+        val dialog = context?.let { BottomSheetDialog(it) }
+        val view = layoutInflater.inflate(R.layout.fragment_no_internet, null)
+
+        val btnClose = view.findViewById<Button>(R.id.buttonAgree)
+        val textViewTitle = view.findViewById<TextView>(R.id.textViewTitle)
+        val textViewDescriptionCardInfo = view.findViewById<TextView>(R.id.textViewDescriptionCardInfo)
+        val imageViewInstruction = view.findViewById<ImageView>(R.id.imageViewInstruction)
+
+        textViewTitle.loadText(title)
+        textViewDescriptionCardInfo.loadText(description)
+
+        val tempImage = context?.let { ContextCompat.getDrawable(it, image) }
+        imageViewInstruction.setImageDrawable(tempImage)
+
+        btnClose.setOnClickListener {
+            dialog?.dismiss()
+        }
+        dialog?.setCancelable(false)
+        dialog?.setContentView(view)
+        dialog?.show()
+    }
+
+    fun popBackStack(view: View) {
+        Navigation.findNavController(view).popBackStack()
     }
 
 }
