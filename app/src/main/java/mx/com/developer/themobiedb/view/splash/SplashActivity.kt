@@ -1,7 +1,6 @@
 package mx.com.developer.themobiedb.view.splash
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import mx.com.developer.themobiedb.BaseActivity
 import mx.com.developer.themobiedb.R

@@ -3,7 +3,6 @@ package mx.com.developer.themobiedb.view.uploadFiles
 import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.muddassir.connection_checker.ConnectionState
+import com.muddassir.connection_checker.checkConnection
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_upload.*
 import kotlinx.android.synthetic.main.toolbar_main.*
 import mx.com.developer.themobiedb.BaseFragment
 import mx.com.developer.themobiedb.R
-import mx.com.developer.themobiedb.communication.Resource
 import mx.com.developer.themobiedb.helpers.hide
 import mx.com.developer.themobiedb.helpers.loadText
 import mx.com.developer.themobiedb.helpers.show
@@ -38,6 +37,8 @@ class UploadFragment : BaseFragment() {
     private val viewModel: UploadFileViewModel by viewModels()
 
     lateinit var uriImage : Uri
+
+    var isConnected = false
 
     private val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -79,7 +80,24 @@ class UploadFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkIfIsConnected()
         choseImage()
+    }
+
+    private fun checkIfIsConnected() {
+
+        checkConnection(this) { connectionState ->
+            when (connectionState) {
+                ConnectionState.CONNECTED -> {
+                    isConnected = true
+                    Toast.makeText(context, "Has Internet Connection", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    isConnected = false
+                    dialogNoInternet(getString(R.string.title),getString(R.string.instructions),R.drawable.no_internet_connection)
+                }
+            }
+        }
     }
 
     private fun choseImage() {
@@ -99,14 +117,17 @@ class UploadFragment : BaseFragment() {
 
         val startTakePhoto: () -> Unit = {  ->
 
-            ImagePicker.with(requireActivity())
-                .crop()
-                .compress(1024)
-                .maxResultSize(1080, 1080)
-                .createIntent { intent ->
-                    startForProfileImageResult.launch(intent)
-                }
-
+            if (isConnected) {
+                ImagePicker.with(requireActivity())
+                    .crop()
+                    .compress(1024)
+                    .maxResultSize(1080, 1080)
+                    .createIntent { intent ->
+                        startForProfileImageResult.launch(intent)
+                    }
+            } else {
+                dialogNoInternet(getString(R.string.title),getString(R.string.instructions),R.drawable.no_internet_connection)
+            }
         }
 
         uploadFile.startTakePhoto = startTakePhoto

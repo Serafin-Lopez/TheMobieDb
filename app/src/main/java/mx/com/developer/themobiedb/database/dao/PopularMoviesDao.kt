@@ -1,6 +1,5 @@
 package mx.com.developer.themobiedb.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import mx.com.developer.themobiedb.view.popularMovies.PopularMoviesModel

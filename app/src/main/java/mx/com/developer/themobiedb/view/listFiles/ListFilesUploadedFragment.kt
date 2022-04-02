@@ -3,13 +3,16 @@ package mx.com.developer.themobiedb.view.listFiles
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.muddassir.connection_checker.ConnectionState
+import com.muddassir.connection_checker.checkConnection
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_list_files_uploaded.*
 import kotlinx.android.synthetic.main.fragment_popular_movies.*
@@ -17,9 +20,7 @@ import kotlinx.android.synthetic.main.toolbar_main.*
 import mx.com.developer.themobiedb.BaseFragment
 import mx.com.developer.themobiedb.R
 import mx.com.developer.themobiedb.communication.Resource
-import mx.com.developer.themobiedb.helpers.hide
 import mx.com.developer.themobiedb.helpers.loadText
-import mx.com.developer.themobiedb.helpers.show
 import mx.com.developer.themobiedb.view.uploadFiles.File
 import mx.com.developer.themobiedb.view.uploadFiles.UploadFileViewModel
 
@@ -51,6 +52,7 @@ class ListFilesUploadedFragment : BaseFragment(), FilesListCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkIfIsConnected()
         setupRecyclerView()
         setupList()
     }
@@ -79,6 +81,20 @@ class ListFilesUploadedFragment : BaseFragment(), FilesListCallback {
 
     override fun onFileSelected(file: File) {
 
+    }
+
+    private fun checkIfIsConnected() {
+
+        checkConnection(this) { connectionState ->
+            when (connectionState) {
+                ConnectionState.CONNECTED -> {
+                    Toast.makeText(context, "Has Internet Connection", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    dialogNoInternet(getString(R.string.title),getString(R.string.instructions),R.drawable.no_internet_connection)
+                }
+            }
+        }
     }
 
     private fun setupRecyclerView() {

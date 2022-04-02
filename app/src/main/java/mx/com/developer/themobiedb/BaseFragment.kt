@@ -1,8 +1,9 @@
 package mx.com.developer.themobiedb
 
+
 import android.content.Context
 import android.os.Bundle
-import android.view.KeyEvent
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -10,16 +11,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import com.bumptech.glide.manager.ConnectivityMonitor
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.location.LocationCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.muddassir.connection_checker.ConnectionState
-import com.muddassir.connection_checker.ConnectivityListener
 import com.muddassir.connection_checker.checkConnection
 import mx.com.developer.themobiedb.helpers.loadText
 import mx.com.developer.themobiedb.location.LocationProvider
-import mx.com.developer.themobiedb.view.popularMovies.PopularMoviesFragment
 import javax.inject.Inject
 
 
@@ -92,29 +93,6 @@ abstract class BaseFragment : Fragment() {
     fun showToast(message: String?): Toast {
         return Toast.makeText(context, message, Toast.LENGTH_SHORT)
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //checkConnectionState()
-    }
-
-    private fun checkConnectionState() {
-
-        checkConnection(this) { connectionState ->
-            when (connectionState) {
-                ConnectionState.CONNECTED -> {
-                    Toast.makeText(context, "Has Internet Connection", Toast.LENGTH_SHORT).show()
-                }
-                ConnectionState.SLOW -> {
-                    Toast.makeText(context, "Slow Internet Connection", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-                    //dialogNoInternet(getString(R.string.title),getString(R.string.instructions),R.drawable.no_internet_connection)
-                }
-            }
-        }
-    }
-
 
     fun dialogNoInternet(title:String, description:String, image: Int) {
         val dialog = context?.let { BottomSheetDialog(it) }

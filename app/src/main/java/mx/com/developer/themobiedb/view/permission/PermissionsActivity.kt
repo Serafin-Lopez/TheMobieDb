@@ -2,7 +2,6 @@ package mx.com.developer.themobiedb.view.permission
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import kotlinx.android.synthetic.main.activity_permissions.*
