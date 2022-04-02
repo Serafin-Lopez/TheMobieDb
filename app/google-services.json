@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "512200158301",
+    "project_id": "themobiedb",
+    "storage_bucket": "themobiedb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512200158301:android:31375bfc29dca1253ab1b4",
+        "android_client_info": {
+          "package_name": "mx.com.developer.themobiedb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512200158301-h6e2102i5kease1brqu903btg1dht05f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-ubMed41aJXwp6DK4PY1iO3AKyboAens"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512200158301-h6e2102i5kease1brqu903btg1dht05f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home_popular"
+        android:icon="@drawable/ic_home_red"
+        android:title="@string/popular_movies"/>
+
+    <item
+        android:id="@+id/navigation_upload"
+        android:icon="@drawable/ic_home_red"
+        android:title="@string/upload_file" />
+
+    <item
+        android:id="@+id/navigation_history_locations"
+        android:icon="@drawable/ic_home_red"
+        android:title="@string/history_locations" />
+
+</menu>

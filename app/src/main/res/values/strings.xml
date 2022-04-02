@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">TheMobieDb</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="playing_now">Playing Now</string>
+    <string name="history_locations">History Locations</string>
+    <string name="upload_file">Upload file</string>
+    <string name="chose_your_file">Chose your file</string>
+    <string name="upload_your_file">Upload your file</string>
+    <string name="uploading_file">Uploading file</string>
+    <string name="cancel">Cancel</string>
+    <string name="agree">Agree</string>
+    <string name="attention">ATENTION</string>
+    <string name="confirm_message">The preloaded photo will be deleted. Do you want to proceed?</string>
+
+    <string name="give_permissions">Give permissions</string>
+    <string name="exit_app">Leave</string>
+    <string name="need_all_permissions">The application needs permissions to work properly, please activate them to continue</string>
+</resources>

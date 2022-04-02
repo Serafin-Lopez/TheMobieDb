@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/white"
+    >
+
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_above="@id/needPermissions"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_home_red" />
+
+    <TextView
+        android:id="@+id/needPermissions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/need_all_permissions"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/buttonRequiredPermissions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/needPermissions"
+        android:layout_marginTop="62dp"
+        android:background="@color/red"
+        android:text="@string/give_permissions"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
