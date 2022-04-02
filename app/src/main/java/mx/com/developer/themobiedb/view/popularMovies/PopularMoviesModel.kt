@@ -1,8 +1,10 @@
 package mx.com.developer.themobiedb.view.popularMovies
 
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
@@ -47,5 +49,8 @@ data class PopularMoviesModel(
         @ColumnInfo(name = "vote_average") var voteAverage: Double,
         @SerializedName("vote_count")
         @ColumnInfo(name = "vote_count") var voteCount: Int
-    )
+    ) {
+        @Ignore
+        lateinit var bitmap: Bitmap
+    }
 }

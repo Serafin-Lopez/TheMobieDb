@@ -1,8 +1,6 @@
 package mx.com.developer.themobiedb.view.popularMovies
 
 import android.annotation.SuppressLint
-import android.graphics.BitmapFactory
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import mx.com.developer.themobiedb.R
+import mx.com.developer.themobiedb.helpers.loadBitMap
 import mx.com.developer.themobiedb.helpers.loadText
 
 
@@ -50,12 +49,9 @@ class PopularMoviesAdapter : RecyclerView.Adapter<PopularMoviesAdapter.MoviesLis
 
         fun bind(item: PopularMoviesModel.Result) = with(itemView) {
 
-
             name.loadText(item.title)
-            val url = item.posterPath
-            val imageBytes = Base64.decode(url, Base64.DEFAULT)
-            val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-            imageView.setImageBitmap(decodedImage)
+
+            imageView.loadBitMap(item.bitmap)
 
           /*  val bitmap = BitmapFactory.decodeFile(url)
 

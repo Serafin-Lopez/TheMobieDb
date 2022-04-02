@@ -66,16 +66,27 @@ class FilesRepository @Inject constructor(
 
     suspend fun saveInfoDataImage(file: File) {
         try {
-            var uploadSuccessful: Boolean = false
             filesCollection.document(file.id).set(file, SetOptions.merge())
                 .addOnSuccessListener {
-                    uploadSuccessful = true
                 }.addOnFailureListener {
-                    uploadSuccessful = false
                 }.await()
 
         } catch (e: Exception){
 
         }
+    }
+
+    suspend fun getListFiles() : Resource<List<File>> {
+
+        val resource : Resource<List<File>>
+
+        val list = filesCollection
+            .get()
+            .await()
+            .toObjects(File::class.java)
+
+        resource = Resource.success(list)
+
+        return resource
     }
 }

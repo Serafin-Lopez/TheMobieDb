@@ -22,5 +22,10 @@
         android:name="mx.com.developer.themobiedb.view.uploadFiles.UploadFragment"
         android:label="fragment_upload"
         tools:layout="@layout/fragment_upload" />
+    <fragment
+        android:id="@+id/navigation_list_files_uploaded"
+        android:name="mx.com.developer.themobiedb.view.listFiles.ListFilesUploadedFragment"
+        android:label="fragment_list_files_uploaded"
+        tools:layout="@layout/fragment_list_files_uploaded" />
 
 </navigation>

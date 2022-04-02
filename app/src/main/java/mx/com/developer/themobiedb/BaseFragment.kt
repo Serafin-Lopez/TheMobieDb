@@ -81,17 +81,6 @@ abstract class BaseFragment : Fragment() {
         Navigation.findNavController(view).popBackStack()
     }
 
-    fun backButton() {
-        view?.isFocusableInTouchMode = true
-        view?.requestFocus()
-        view?.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-                popBackStack(v)
-                return@OnKeyListener true
-            }
-            false
-        })
-    }
 
     fun showToast(message: String?): Toast {
         return Toast.makeText(context, message, Toast.LENGTH_SHORT)

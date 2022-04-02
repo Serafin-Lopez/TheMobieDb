@@ -19,6 +19,8 @@ class UploadFileViewModel @Inject constructor(
    var filesRepository: FilesRepository
 ) : ViewModel() {
 
+    val data = MutableLiveData<Resource<List<File>>>()
+
     fun uploadFile(fileName: String, uri: Uri, fragment: Fragment) {
       viewModelScope.launch(Dispatchers.IO) {
         filesRepository.saveImage(fileName, uri,fragment)
@@ -28,6 +30,13 @@ class UploadFileViewModel @Inject constructor(
     fun saveFileInfo(file: File) {
         viewModelScope.launch(Dispatchers.IO) {
             filesRepository.saveInfoDataImage(file)
+        }
+    }
+
+    fun getListFiles() {
+        data.postValue(Resource.loading())
+        viewModelScope.launch(Dispatchers.IO) {
+            data.postValue(filesRepository.getListFiles())
         }
     }
 

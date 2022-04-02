@@ -9,7 +9,7 @@ import mx.com.developer.themobiedb.view.popularMovies.PopularMoviesModel
 interface PopularMoviesDao: BaseDao<PopularMoviesModel.Result> {
 
     @Query("SELECT * FROM popular_movies_table")
-    fun getPopularMovies(): LiveData<List<PopularMoviesModel.Result>>
+    fun getPopularMovies(): List<PopularMoviesModel.Result>
 
     @Query("DELETE FROM popular_movies_table")
     fun deleteAllMovies()

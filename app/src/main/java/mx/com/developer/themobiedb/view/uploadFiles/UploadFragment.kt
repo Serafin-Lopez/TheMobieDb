@@ -18,9 +18,12 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_upload.*
 import kotlinx.android.synthetic.main.toolbar_main.*
+import mx.com.developer.themobiedb.BaseFragment
 import mx.com.developer.themobiedb.R
 import mx.com.developer.themobiedb.communication.Resource
+import mx.com.developer.themobiedb.helpers.hide
 import mx.com.developer.themobiedb.helpers.loadText
+import mx.com.developer.themobiedb.helpers.show
 import java.util.*
 
 
@@ -30,7 +33,7 @@ import java.util.*
  * create an instance of this fragment.
  */
 @AndroidEntryPoint
-class UploadFragment : Fragment() {
+class UploadFragment : BaseFragment() {
 
     private val viewModel: UploadFileViewModel by viewModels()
 
@@ -80,10 +83,15 @@ class UploadFragment : Fragment() {
     }
 
     private fun choseImage() {
+        textViewSeeImage.hide()
         textViewTitleToolbar.loadText(getString(R.string.upload_file))
         startTakePhoto()
         deleteImage()
         startUploadImage()
+
+        textViewSeeImage.setOnClickListener {
+            navigateToFragment(it,R.id.navigation_list_files_uploaded)
+        }
     }
 
 
@@ -147,6 +155,8 @@ class UploadFragment : Fragment() {
 
         val file = File(title = title, imageUrl = imageUrl)
         viewModel.saveFileInfo(file)
+
+        textViewSeeImage.show()
     }
 
     fun observeErrorUpload(message:String) {

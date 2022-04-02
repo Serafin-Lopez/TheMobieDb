@@ -7,12 +7,16 @@
 
     <item
         android:id="@+id/navigation_upload"
-        android:icon="@drawable/ic_home_red"
+        android:icon="@drawable/ic_upload_file"
         android:title="@string/upload_file" />
 
     <item
         android:id="@+id/navigation_history_locations"
-        android:icon="@drawable/ic_home_red"
+        android:icon="@drawable/ic_locations"
         android:title="@string/history_locations" />
 
+    <item
+        android:id="@+id/navigation_list_files_uploaded"
+        android:icon="@drawable/ic_cloud_files"
+        android:title="@string/files_uploaded" />
 </menu>

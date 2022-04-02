@@ -2,6 +2,8 @@ package mx.com.developer.themobiedb.view.popularMovies
 
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,8 +22,9 @@ class PopularMoviesViewModel @Inject constructor(
 
     var movies = MutableLiveData <Resource<PopularMoviesModel>>()
 
-    var localData :  LiveData<List<PopularMoviesModel.Result>> = moviesRepository.getLocalPopularMovies()
+    var localData =  MutableLiveData<List<PopularMoviesModel.Result>>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun loadPopularMovies() {
       movies.postValue(Resource.loading())
       viewModelScope.launch(Dispatchers.IO) {
@@ -30,5 +33,12 @@ class PopularMoviesViewModel @Inject constructor(
       }
     }
 
+    fun getMovies() {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val listMovies = moviesRepository.getLocalPopularMovies()
+            localData.postValue(listMovies)
+        }
+    }
 
 }

@@ -2,7 +2,9 @@ package mx.com.developer.themobiedb.repository
 
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Build
+import android.util.Base64
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
@@ -74,6 +76,18 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    fun getLocalPopularMovies() : LiveData<List<PopularMoviesModel.Result>> = localDataSource.getPopularMovies()
+    suspend fun getLocalPopularMovies() : List<PopularMoviesModel.Result> {
+
+        val data = localDataSource.getPopularMovies()
+
+        data.forEach {
+            val url = it.posterPath
+            val imageBytes = Base64.decode(url, Base64.DEFAULT)
+            val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            it.bitmap = decodedImage
+        }
+
+        return data
+    }
 
 }

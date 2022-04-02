@@ -17,4 +17,7 @@
     <string name="give_permissions">Give permissions</string>
     <string name="exit_app">Leave</string>
     <string name="need_all_permissions">The application needs permissions to work properly, please activate them to continue</string>
+    <string name="loading">Loading, please waiting</string>
+    <string name="files_uploaded">Files Uploaded</string>
+    <string name="see_image">See image uploaded</string>
 </resources>
