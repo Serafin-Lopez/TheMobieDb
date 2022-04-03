@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
@@ -12,7 +11,6 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import mx.com.developer.themobiedb.communication.Resource
-import mx.com.developer.themobiedb.communication.remote.BaseDataSource
 import mx.com.developer.themobiedb.di.FirebaseModule
 import mx.com.developer.themobiedb.view.uploadFiles.File
 import mx.com.developer.themobiedb.view.uploadFiles.UploadFragment

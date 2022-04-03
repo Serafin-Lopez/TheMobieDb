@@ -3,7 +3,6 @@ package mx.com.developer.themobiedb
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -11,14 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.location.LocationCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.muddassir.connection_checker.ConnectionState
-import com.muddassir.connection_checker.checkConnection
 import mx.com.developer.themobiedb.helpers.loadText
 import mx.com.developer.themobiedb.location.LocationProvider
 import javax.inject.Inject

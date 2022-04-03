@@ -7,9 +7,10 @@ import android.content.Intent
 import android.content.IntentSender
 import android.location.LocationManager
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import mx.com.developer.themobiedb.helpers.MultiplePermissionListener
 import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
@@ -22,6 +23,9 @@ import mx.com.developer.themobiedb.helpers.Constants.LOCATION_REQUEST_FASTEST_IN
 import mx.com.developer.themobiedb.helpers.Constants.LOCATION_REQUEST_UPDATE_INTERVAL
 import mx.com.developer.themobiedb.helpers.Constants.REQUEST_CODE_CHECK_SETTINGS
 import mx.com.developer.themobiedb.helpers.ErrorListener
+import mx.com.developer.themobiedb.helpers.MultiplePermissionListener
+import mx.com.developer.themobiedb.location.LocationProvider
+import javax.inject.Inject
 
 
 /**
@@ -32,9 +36,41 @@ import mx.com.developer.themobiedb.helpers.ErrorListener
 abstract class BaseActivity : AppCompatActivity() {
 
 
+    @Inject
+    lateinit var  locationProvider : LocationProvider
+
     private lateinit var allPermissionsListener: MultiplePermissionsListener
     private lateinit var errorListener: PermissionRequestErrorListener
 
+
+
+    /**
+     * Var to store the current callback from the child fragment that has been subscribed for location updates.
+     * It will depend on the child fragment to decide to subscribe for location updates or not.
+     */
+
+    private var locationCallback: LocationCallback? = null
+
+    override fun onPause() {
+        super.onPause()
+        locationCallback?.let { stopLocationUpdates() }
+    }
+
+    /**
+     * Start for location updates. This function must be called from on Resume()
+     */
+    fun startLocationUpdates(locationCallback: LocationCallback) {
+        this.locationCallback = locationCallback
+        locationProvider.subscribeForLocationUpdates(locationCallback)
+    }
+
+    /**
+     * Remove location Updates
+     */
+    private fun stopLocationUpdates() {
+        locationProvider.client.removeLocationUpdates(locationCallback)
+        locationCallback = null
+    }
 
     fun multiplePermissionListener() {
 
@@ -147,6 +183,10 @@ abstract class BaseActivity : AppCompatActivity() {
         } else {
             multiplePermissionListener()
         }
+    }
+
+    fun showToast(message: String?): Toast {
+        return Toast.makeText(this, message, Toast.LENGTH_SHORT)
     }
 
 }

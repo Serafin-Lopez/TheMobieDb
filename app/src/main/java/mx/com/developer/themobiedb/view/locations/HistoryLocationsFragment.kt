@@ -3,15 +3,11 @@ package mx.com.developer.themobiedb.view.locations
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
-import com.google.android.gms.location.LocationAvailability
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -46,11 +42,6 @@ class HistoryLocationsFragment : BaseFragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpMapViewLocations(savedInstanceState)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        startLocationUpdates(getLocationCallback())
     }
 
     private fun setUpMapViewLocations(savedInstanceState: Bundle?) {
@@ -93,32 +84,5 @@ class HistoryLocationsFragment : BaseFragment(), OnMapReadyCallback {
 
         }
     }
-
-
-    private fun getLocationCallback() = object : LocationCallback() {
-
-        override fun onLocationResult(locationResult: LocationResult?) {
-            // Do something when we receive a new location update
-        }
-
-        @SuppressLint("MissingPermission")
-        override fun onLocationAvailability(locationAvailability: LocationAvailability?) {
-            super.onLocationAvailability(locationAvailability)
-            locationAvailability?.let {
-                if (it.isLocationAvailable) {
-                    Log.e("Location","Services are available!")
-                    locationProvider.client.lastLocation.addOnSuccessListener { location ->
-                        if (location != null) {
-                            updateLocationOnMap(location)
-                        }
-                    }
-                } else {
-                    Log.e("Location","Services not available!")
-                    callbackActivity?.requestForLocationUpdates()
-                }
-            }
-        }
-    }
-
 
 }

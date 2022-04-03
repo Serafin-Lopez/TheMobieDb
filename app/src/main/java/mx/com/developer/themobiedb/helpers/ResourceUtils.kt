@@ -16,6 +16,7 @@ import java.io.FileOutputStream
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -92,5 +93,38 @@ object ResourceUtils {
     fun getFileExtension(context:  Context, uri: Uri?): String?{
         return MimeTypeMap.getSingleton()
             .getExtensionFromMimeType(context.contentResolver.getType(uri!!))
+    }
+
+    fun getToday(): String {
+        val calendar: Calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        return changeDateFormat(year, month, day,"EEEE")
+    }
+
+    /**
+     * change date format
+     * use this function if you need to change the date format
+     *
+     * @param year this parameter is assigned by DatePickerDialog
+     * @param month this parameter is assigned by DatePickerDialog
+     * @param day this parameter is assigned by DatePickerDialog
+     * @param timeFormat this parameter is assigned by DatePickerDialog
+     *@return dateFormat returns the value of the date with the new format
+     */
+    fun changeDateFormat(year: Int, month: Int, day:Int, timeFormat: String) : String{
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, (month))
+        calendar.set(Calendar.DAY_OF_MONTH, day)
+
+        val dateFormat = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            SimpleDateFormat(timeFormat, Locale.forLanguageTag("es-ES"))
+        } else {
+            SimpleDateFormat(timeFormat, Locale.getDefault())
+        }
+        return  dateFormat.format(calendar.time)
     }
 }
