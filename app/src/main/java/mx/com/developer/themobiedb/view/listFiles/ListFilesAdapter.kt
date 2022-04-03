@@ -1,6 +1,8 @@
 package mx.com.developer.themobiedb.view.listFiles
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +55,10 @@ class ListFilesAdapter : RecyclerView.Adapter<ListFilesAdapter.FilesListViewHold
             name.loadText(item.title)
 
             imageView.loadUrlImage(item.imageUrl)
+
+            name.setBackgroundColor(Color.BLACK)
+            name.setTextColor(Color.WHITE)
+            imageView.setColorFilter(0xFFFF696969.toInt(), PorterDuff.Mode.MULTIPLY)
 
             file = item
 

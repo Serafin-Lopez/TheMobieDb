@@ -1,6 +1,8 @@
 package mx.com.developer.themobiedb.view.uploadFiles
 
 import android.app.Activity
+import android.content.Context
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -31,6 +34,7 @@ import java.util.*
  * Use the [UploadFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class UploadFragment : BaseFragment() {
 
@@ -80,13 +84,13 @@ class UploadFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkIfIsConnected()
         choseImage()
     }
 
     private fun checkIfIsConnected() {
 
-        checkConnection(this) { connectionState ->
+        checkConnection(viewLifecycleOwner) { connectionState ->
+
             when (connectionState) {
                 ConnectionState.CONNECTED -> {
                     isConnected = true
@@ -106,7 +110,7 @@ class UploadFragment : BaseFragment() {
         startTakePhoto()
         deleteImage()
         startUploadImage()
-
+        checkIfIsConnected()
         textViewSeeImage.setOnClickListener {
             navigateToFragment(it,R.id.navigation_list_files_uploaded)
         }
@@ -115,9 +119,10 @@ class UploadFragment : BaseFragment() {
 
     private fun startTakePhoto() {
 
+
         val startTakePhoto: () -> Unit = {  ->
 
-            if (isConnected) {
+            if (isNetworkConnected()) {
                 ImagePicker.with(requireActivity())
                     .crop()
                     .compress(1024)
@@ -185,6 +190,10 @@ class UploadFragment : BaseFragment() {
         uploadFile.errorText = message
     }
 
+    private fun isNetworkConnected(): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        return cm!!.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
+    }
 
 
 }
