@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -57,9 +58,15 @@ class PopularMoviesFragment : BaseFragment(), MoviesListCallback {
         setupObserverData()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupRecyclerView() {
         progressBar.hide()
         textViewTitleToolbar.loadText(getString(R.string.popular_movies))
+        val tempImage = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_sync_data) }
+        actionBack.setImageDrawable(tempImage)
+        actionBack.setOnClickListener {
+            viewModel.loadPopularMovies()
+        }
         recyclerViewMovies?.layoutManager = GridLayoutManager(context,2)
         recyclerViewMovies?.adapter = adapter
     }
@@ -67,23 +74,26 @@ class PopularMoviesFragment : BaseFragment(), MoviesListCallback {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupObserverData() {
 
-        viewModel.loadPopularMovies()
+        getPopularMovies()
 
         viewModel.movies.observe(viewLifecycleOwner, Observer { result ->
             when(result.status) {
 
                 Resource.Status.LOADING -> {
                     progressBar.show()
+                    recyclerViewMovies.hide()
                     Log.e("movies","${Resource.Status.LOADING}")
                 }
 
                 Resource.Status.SUCCESS -> {
                     progressBar.hide()
+                    recyclerViewMovies.show()
                     Log.e("movies","${Resource.Status.SUCCESS}")
                     getPopularMovies()
                 }
 
                 Resource.Status.ERROR -> {
+                    recyclerViewMovies.show()
                     progressBar.hide()
                     Log.e("movies","${Resource.Status.ERROR}")
                     getPopularMovies()
@@ -96,6 +106,7 @@ class PopularMoviesFragment : BaseFragment(), MoviesListCallback {
         showToast(movie.title).show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun getPopularMovies() {
 
         viewModel.getMovies()
@@ -114,6 +125,10 @@ class PopularMoviesFragment : BaseFragment(), MoviesListCallback {
                     recyclerViewMovies.show()
                     Log.e("movies","${Resource.Status.SUCCESS}")
                     result.data?.let { adapter.setData(it) }
+
+                    if (result.data.isNullOrEmpty()) {
+                        viewModel.loadPopularMovies()
+                    }
                 }
 
                 Resource.Status.ERROR -> {
