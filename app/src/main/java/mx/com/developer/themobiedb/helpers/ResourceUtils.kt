@@ -90,18 +90,13 @@ object ResourceUtils {
         }
     }
 
-    fun getFileExtension(context:  Context, uri: Uri?): String?{
-        return MimeTypeMap.getSingleton()
-            .getExtensionFromMimeType(context.contentResolver.getType(uri!!))
-    }
-
     fun getToday(): String {
         val calendar: Calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        return changeDateFormat(year, month, day,"EEEE")
+        return changeDateFormat(year, month, day,"dd MMMM yyyy")
     }
 
     /**

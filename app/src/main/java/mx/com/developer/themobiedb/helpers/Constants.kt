@@ -7,7 +7,7 @@ object Constants {
     const val LOCATION_COLLECTION = "locations"
     const val FILES_COLLECTION = "files"
     const val LOCATION_REQUEST_UPDATE_INTERVAL: Long = 200
-    const val LOCATION_REQUEST_FASTEST_INTERVAL: Long = 2000
+    const val LOCATION_REQUEST_FASTEST_INTERVAL: Long = 300000
     const val REQUEST_CODE_CHECK_SETTINGS = 1
 
 }

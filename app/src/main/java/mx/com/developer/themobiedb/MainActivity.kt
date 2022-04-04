@@ -54,11 +54,9 @@ class MainActivity : BaseActivity(), NavController.OnDestinationChangedListener,
     private fun getLocationCallback() = object : LocationCallback() {
 
         override fun onLocationResult(locationResult: LocationResult?) {
-
-            val location = Locations(date = ResourceUtils.getToday(), lat = "${locationResult?.lastLocation?.latitude}" , lng = "${locationResult?.lastLocation?.latitude}}")
+            val location = Locations(date = ResourceUtils.getToday(), lat = "${locationResult?.lastLocation?.latitude}" , lng = "${locationResult?.lastLocation?.longitude}")
             viewModel.saveLocation(location)
-
-            showToast("my location ${locationResult?.lastLocation?.latitude} ${locationResult?.lastLocation?.latitude}").show()
+            showToast(" my location ${locationResult?.lastLocation?.latitude} ${locationResult?.lastLocation?.longitude}").show()
         }
 
         @SuppressLint("MissingPermission")
